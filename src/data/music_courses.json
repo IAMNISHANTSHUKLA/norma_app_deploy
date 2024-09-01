@@ -1,0 +1,104 @@
+{
+  "courses": [
+      {
+          "id": 1,
+          "title": "Compliance Fundamentals",
+          "slug": "compliance-fundamentals",
+          "description": "Gain a strong foundation in compliance management with Normatech AI's comprehensive service, ensuring your organization meets all regulatory requirements.",
+          "price": 99.99,
+          "complianceOfficer": "John Doe",
+          "isFeatured": true,
+          "image": "/courses/guitar.jpg"
+      },
+      {
+          "id": 2,
+          "title": "Risk Assessment Services",
+          "slug": "risk-assessment-services",
+          "description": "Start your compliance journey with Normatech AI's expert risk assessment services, helping you identify and mitigate potential compliance risks.",
+          "price": 109.99,
+          "complianceOfficer": "Jane Smith",
+          "isFeatured": false,
+          "image": "/courses/piano.jpg"
+      },
+      {
+          "id": 3,
+          "title": "Advanced Audit Support",
+          "slug": "advanced-audit-support",
+          "description": "Enhance your audit capabilities with Normatech AI's advanced audit support services, tailored for organizations seeking thorough compliance evaluations.",
+          "price": 119.99,
+          "complianceOfficer": "Emily Johnson",
+          "isFeatured": true,
+          "image": "/courses/vocalist.jpg"
+      },
+      {
+          "id": 4,
+          "title": "Compliance Mastery",
+          "slug": "compliance-mastery",
+          "description": "Achieve compliance excellence with Normatech AI's comprehensive mastery services, covering all critical aspects of regulatory compliance.",
+          "price": 129.99,
+          "complianceOfficer": "Mike Brown",
+          "isFeatured": false,
+          "image": "/courses/drumming.jpg"
+      },
+      {
+          "id": 5,
+          "title": "Regulatory Framework Consulting",
+          "slug": "regulatory-framework-consulting",
+          "description": "Navigate complex regulatory frameworks with ease using Normatech AI's expert consulting services, designed to keep your organization compliant.",
+          "price": 139.99,
+          "complianceOfficer": "Chris Davis",
+          "isFeatured": false,
+          "image": "/courses/jazz.jpg"
+      },
+      {
+          "id": 6,
+          "title": "Compliance Technology Integration",
+          "slug": "compliance-technology-integration",
+          "description": "Leverage the latest compliance technology with Normatech AI's integration services, ensuring seamless adoption of advanced compliance tools.",
+          "price": 149.99,
+          "complianceOfficer": "Alex Wilson",
+          "isFeatured": true,
+          "image": "/courses/music-prod.jpg"
+      },
+      {
+          "id": 7,
+          "title": "Policy Development Services",
+          "slug": "policy-development-services",
+          "description": "Create robust compliance policies with Normatech AI's policy development services, tailored to meet your organization's specific needs.",
+          "price": 159.99,
+          "complianceOfficer": "Samantha Miller",
+          "isFeatured": false,
+          "image": "/courses/song-writing.jpg"
+      },
+      {
+          "id": 8,
+          "title": "Digital Compliance Management",
+          "slug": "digital-compliance-management",
+          "description": "Streamline your digital compliance processes with Normatech AI's comprehensive management services, suitable for organizations of all sizes.",
+          "price": 169.99,
+          "complianceOfficer": "Luke Harris",
+          "isFeatured": true,
+          "image": "/courses/music-prod.jpg"
+      },
+      {
+          "id": 9,
+          "title": "Compliance History & Best Practices",
+          "slug": "compliance-history-best-practices",
+          "description": "Learn from the evolution of compliance with Normatech AI's insights into best practices and historical trends in regulatory compliance.",
+          "price": 179.99,
+          "complianceOfficer": "Grace Lee",
+          "isFeatured": false,
+          "image": "/courses/classical-music.jpg"
+      },
+      {
+          "id": 10,
+          "title": "Ethics and Compliance Services",
+          "slug": "ethics-and-compliance-services",
+          "description": "Integrate ethics into your compliance framework with Normatech AI's specialized services, enhancing integrity and trust within your organization.",
+          "price": 189.99,
+          "complianceOfficer": "Ethan Moore",
+          "isFeatured": true,
+          "image": "/courses/blues.jpg"
+      }
+  ]
+}
