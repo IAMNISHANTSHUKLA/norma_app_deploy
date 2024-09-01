@@ -1,8 +1,20 @@
 "use client";
+
 import { cn } from "@/utils/cn";
 import React, { useEffect, useRef } from "react";
 import { createNoise3D } from "simplex-noise";
+import { CardContainer, CardBody } from "./3d-card";
 
+
+// Define the type for the 'course' prop
+interface Course {
+  id: string;
+  title: string;
+  description: string;
+  // Add other properties of the course object as needed
+}
+
+// WavyBackground component
 export const WavyBackground = ({
   children,
   className,
@@ -127,3 +139,18 @@ export const WavyBackground = ({
     </div>
   );
 };
+
+// CourseCard component
+const CourseCard: React.FC<{ course: Course }> = ({ course }) => {
+  return (
+    <CardContainer className="inter-var m-4">
+      <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
+        <h3 className="text-lg font-semibold">{course.title}</h3>
+        <p className="text-sm">{course.description}</p>
+        {/* Add more content related to the course if needed */}
+      </CardBody>
+    </CardContainer>
+  );
+};
+
+export default CourseCard;
