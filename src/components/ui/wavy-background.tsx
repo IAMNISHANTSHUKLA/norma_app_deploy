@@ -1,10 +1,9 @@
 "use client";
 
 import { cn } from "@/utils/cn";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback, useMemo } from "react";
 import { createNoise3D } from "simplex-noise";
 import { CardContainer, CardBody } from "./3d-card";
-
 
 // Define the type for the 'course' prop
 interface Course {
@@ -38,18 +37,17 @@ export const WavyBackground = ({
   waveOpacity?: number;
   [key: string]: any;
 }) => {
-  const noise = createNoise3D();
-  let w: number,
-    h: number,
-    nt: number,
-    i: number,
-    x: number,
-    ctx: CanvasRenderingContext2D | null,
-    canvas: HTMLCanvasElement | null;
+  const noise = useMemo(() => createNoise3D(), []);
+  
+  // Using useRef to preserve the values across renders
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+  const wRef = useRef<number>(0);
+  const hRef = useRef<number>(0);
+  const ntRef = useRef<number>(0);
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  const getSpeed = () => {
+  // Wrap 'getSpeed' in useCallback
+  const getSpeed = useCallback(() => {
     switch (speed) {
       case "slow":
         return 0.001;
@@ -58,46 +56,56 @@ export const WavyBackground = ({
       default:
         return 0.001;
     }
-  };
+  }, [speed]);
 
-  const waveColors = colors ?? [
-    "#38bdf8",
-    "#818cf8",
-    "#c084fc",
-    "#e879f9",
-    "#22d3ee",
-  ];
+  // Wrap 'waveColors' in useMemo
+  const waveColors = useMemo(() => {
+    return colors ?? [
+      "#38bdf8",
+      "#818cf8",
+      "#c084fc",
+      "#e879f9",
+      "#22d3ee",
+    ];
+  }, [colors]);
 
-  const drawWave = (n: number) => {
-    nt += getSpeed();
-    if (!ctx) return;
-    for (i = 0; i < n; i++) {
-      ctx.beginPath();
-      ctx.lineWidth = waveWidth || 50;
-      ctx.strokeStyle = waveColors[i % waveColors.length];
-      for (x = 0; x < w; x += 5) {
-        const y = noise(x / 800, 0.3 * i, nt) * 100;
-        ctx.lineTo(x, y + h * 0.5); // adjust for height, currently at 50% of the container
+  const drawWave = useCallback(
+    (n: number) => {
+      ntRef.current += getSpeed();
+      const ctx = ctxRef.current;
+      const w = wRef.current;
+      const h = hRef.current;
+      if (!ctx) return;
+      for (let i = 0; i < n; i++) {
+        ctx.beginPath();
+        ctx.lineWidth = waveWidth || 50;
+        ctx.strokeStyle = waveColors[i % waveColors.length];
+        for (let x = 0; x < w; x += 5) {
+          const y = noise(x / 800, 0.3 * i, ntRef.current) * 100;
+          ctx.lineTo(x, y + h * 0.5); // adjust for height, currently at 50% of the container
+        }
+        ctx.stroke();
+        ctx.closePath();
       }
-      ctx.stroke();
-      ctx.closePath();
-    }
-  };
+    },
+    [getSpeed, waveWidth, waveColors, noise]
+  );
 
   useEffect(() => {
     const init = () => {
-      canvas = canvasRef.current;
+      const canvas = canvasRef.current;
       if (canvas) {
-        ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext("2d");
+        ctxRef.current = ctx;
         if (ctx) {
-          w = ctx.canvas.width = window.innerWidth;
-          h = ctx.canvas.height = window.innerHeight;
+          wRef.current = ctx.canvas.width = window.innerWidth;
+          hRef.current = ctx.canvas.height = window.innerHeight;
           ctx.filter = `blur(${blur}px)`;
-          nt = 0;
+          ntRef.current = 0;
           window.onresize = function () {
             if (ctx) {
-              w = ctx.canvas.width = window.innerWidth;
-              h = ctx.canvas.height = window.innerHeight;
+              wRef.current = ctx.canvas.width = window.innerWidth;
+              hRef.current = ctx.canvas.height = window.innerHeight;
               ctx.filter = `blur(${blur}px)`;
             }
           };
@@ -109,6 +117,9 @@ export const WavyBackground = ({
     let animationId: number;
 
     const render = () => {
+      const ctx = ctxRef.current;
+      const w = wRef.current;
+      const h = hRef.current;
       if (ctx) {
         ctx.fillStyle = backgroundFill || "black";
         ctx.globalAlpha = waveOpacity || 0.5;
@@ -123,7 +134,7 @@ export const WavyBackground = ({
     return () => {
       cancelAnimationFrame(animationId);
     };
-  }, [blur, backgroundFill, waveOpacity, speed, waveWidth, colors]);
+  }, [blur, backgroundFill, waveOpacity, speed, waveWidth, colors, drawWave]);
 
   return (
     <div
